@@ -57,6 +57,14 @@ A test class looks like this:
 		}
 	}
 
+#### 2.3.3 Run your tests!
+
+In your terminal:
+
+	gunpowder Test
+
+You should now see the results of your tests. As a bonus, the script will end with exit status 0 if all tests passed, and with exit status 1 if some tests failed.
+
 
 ### 3. License
 
