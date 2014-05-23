@@ -45,17 +45,19 @@ Create a new file & write to it:
 
 A test class looks like this:
 
-	<?php
+```php
+<?php
 
-	class Test extends Gunpowder\SmokeTest
-	{
-		public function test_the_github_page()
-		{
-			$this->visit('https://github.com/turanct/gunpowder');
-			$this->assertResponseCode(200);
-			$this->assertBodyContains('gunpowder');
-		}
-	}
+class Test extends Gunpowder\SmokeTest
+{
+    public function test_the_github_page()
+    {
+        $this->visit('https://github.com/turanct/gunpowder');
+        $this->assertResponseCode(200);
+        $this->assertBodyContains('gunpowder');
+    }
+}
+```
 
 #### 2.3.3 Run your tests!
 
