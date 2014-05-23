@@ -5,21 +5,21 @@
 require_once __DIR__ . '/vendor/autoload.php';
 
 if (!isset($argv[1])) {
-	// Show usage
-	die;
+    // Show usage
+    die;
 }
 
 $testClass = ucfirst($argv[1]);
 $testClassPath = getenv('HOME') . '/.gunpowder/' . $testClass . '.php';
 if (!file_exists($testClassPath)) {
-	// Show usage
-	die;
+    // Show usage
+    die;
 }
 
 require_once $testClassPath;
 if (!class_exists($testClass)) {
-	// Show usage
-	die;
+    // Show usage
+    die;
 }
 
 // Create new Guzzle client

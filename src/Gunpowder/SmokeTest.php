@@ -7,132 +7,131 @@ use Gunpowder\Output\Output;
 
 class SmokeTest
 {
-	/**
-	 * @var GuzzleHttp\Client $client The guzzle client
-	 */
-	private $client;
+    /**
+     * @var GuzzleHttp\Client $client The guzzle client
+     */
+    private $client;
 
-	/**
-	 * @var GuzzleHttp\Message\Response $response The current Guzzle Response
-	 */
-	private $response;
+    /**
+     * @var GuzzleHttp\Message\Response $response The current Guzzle Response
+     */
+    private $response;
 
-	/**
-	 * @var Gunpowder\Output\Output $output The output handler
-	 */
-	private $output;
+    /**
+     * @var Gunpowder\Output\Output $output The output handler
+     */
+    private $output;
 
-	/**
-	 * @var bool $testStatus The status of all tests. If one test failes, it's set to false
-	 */
-	private $testStatus = true;
+    /**
+     * @var bool $testStatus The status of all tests. If one test failes, it's set to false
+     */
+    private $testStatus = true;
 
-	/**
-	 * Constructor
-	 *
-	 * @param GuzzleHttp\Client       $client The guzzle client
-	 * @param Gunpowder\Output\Output $output The output handler
-	 */
-	final public function __construct(Client $client, Output $output)
-	{
-		$this->client = $client;
-		$this->output = $output;
-	}
+    /**
+     * Constructor
+     *
+     * @param GuzzleHttp\Client       $client The guzzle client
+     * @param Gunpowder\Output\Output $output The output handler
+     */
+    final public function __construct(Client $client, Output $output)
+    {
+        $this->client = $client;
+        $this->output = $output;
+    }
 
-	/**
-	 * Visit an url, optionally checking http response code
-	 *
-	 * @param string $url The url we need to visit
-	 *
-	 * @return GuzzleHttp\Message\Response The response
-	 */
-	public function visit($url, $responseCode = false)
-	{
-		$this->output->message('> ' . $url);
+    /**
+     * Visit an url, optionally checking http response code
+     *
+     * @param string $url The url we need to visit
+     *
+     * @return GuzzleHttp\Message\Response The response
+     */
+    public function visit($url, $responseCode = false)
+    {
+        $this->output->message('> ' . $url);
 
-		$this->response = $this->client->get($url);
-		
-		if ($responseCode !== false) {
-			$this->assertResponseCode(200);
-		}
+        $this->response = $this->client->get($url);
 
-		return $this->response;
-	}
+        if ($responseCode !== false) {
+            $this->assertResponseCode(200);
+        }
 
-	/**
-	 * Assert a response code for the current response
-	 *
-	 * @param int $responseCode The response code that we want to assert on
-	 *
-	 * @return bool Did the assertion succeed?
-	 */
-	public function assertResponseCode($responseCode)
-	{
-		$message = 'Response code is ' . $responseCode;
+        return $this->response;
+    }
 
-		if ((int) $this->response->getStatusCode() === $responseCode) {
-			$this->output->success($message);
+    /**
+     * Assert a response code for the current response
+     *
+     * @param int $responseCode The response code that we want to assert on
+     *
+     * @return bool Did the assertion succeed?
+     */
+    public function assertResponseCode($responseCode)
+    {
+        $message = 'Response code is ' . $responseCode;
 
-			return true;
-		} else {
-			// Fail the test
-			$this->testStatus = false;
+        if ((int) $this->response->getStatusCode() === $responseCode) {
+            $this->output->success($message);
 
-			$this->output->failure($message . ' [got ' . $this->response->getStatusCode() . ']');
+            return true;
+        } else {
+            // Fail the test
+            $this->testStatus = false;
 
-			return false;
-		}
-	}
+            $this->output->failure($message . ' [got ' . $this->response->getStatusCode() . ']');
 
-	/**
-	 * Assert that the body contains a certain string
-	 *
-	 * @param string $text The text that we want to look for in the body
-	 *
-	 * @return bool Did the assertion succeed?
-	 */
-	public function assertBodyContains($text)
-	{
-		$message = 'Body contains "' . $text . '"';
+            return false;
+        }
+    }
 
-		if (stristr($this->response->getBody(), $text)) {
-			$this->output->success($message);
+    /**
+     * Assert that the body contains a certain string
+     *
+     * @param string $text The text that we want to look for in the body
+     *
+     * @return bool Did the assertion succeed?
+     */
+    public function assertBodyContains($text)
+    {
+        $message = 'Body contains "' . $text . '"';
 
-			return true;
-		} else {
-			// Fail the test
-			$this->testStatus = false;
+        if (stristr($this->response->getBody(), $text)) {
+            $this->output->success($message);
 
-			$this->output->failure($message . ' [not found]');
+            return true;
+        } else {
+            // Fail the test
+            $this->testStatus = false;
 
-			return false;
-		}
-	}
+            $this->output->failure($message . ' [not found]');
 
-	/**
-	 * Run the tests
-	 */
-	public function run()
-	{
-		$classMethods = get_class_methods($this);
+            return false;
+        }
+    }
 
-		foreach ($classMethods as $classMethod) {
-			if (preg_match('/^test_(.*$)/i', $classMethod)) {
-				$this->output->title(str_replace('_', ' ', $classMethod));
+    /**
+     * Run the tests
+     */
+    public function run()
+    {
+        $classMethods = get_class_methods($this);
 
-				$this->$classMethod();
-			}
-		}
-	}
+        foreach ($classMethods as $classMethod) {
+            if (preg_match('/^test_(.*$)/i', $classMethod)) {
+                $this->output->title(str_replace('_', ' ', $classMethod));
 
-	/**
-	 * Get the correct exit status for our test suite
-	 *
-	 * @return int The exit status
-	 */
-	public function getExitStatus()
-	{
-		return ($this->testStatus === true) ? 0 : 1;
-	}
+                $this->$classMethod();
+            }
+        }
+    }
+
+    /**
+     * Get the correct exit status for our test suite
+     *
+     * @return int The exit status
+     */
+    public function getExitStatus()
+    {
+        return ($this->testStatus === true) ? 0 : 1;
+    }
 }
-

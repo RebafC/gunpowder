@@ -13,12 +13,12 @@ class TermColorSpec extends ObjectBehavior
         $this->shouldImplement('Gunpowder\Output\Output');
     }
 
-	function it_should_echo_something()
-	{
-		$this->message('')->shouldReturn(null);
-		$this->title('ramsam')->shouldReturn(null);
-		$this->message('test123')->shouldReturn(null);
-		$this->success('bla')->shouldReturn(null);
-		$this->failure('bla')->shouldReturn(null);
-	}
+    function it_should_echo_something()
+    {
+        $this->message('')->shouldReturn(null);
+        $this->title('ramsam')->shouldReturn(null);
+        $this->message('test123')->shouldReturn(null);
+        $this->success('bla')->shouldReturn(null);
+        $this->failure('bla')->shouldReturn(null);
+    }
 }
