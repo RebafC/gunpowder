@@ -1,0 +1,30 @@
+{
+	"name": "turanct/gunpowder",
+	"description": "Simple PHP smoke tests",
+	"type": "application",
+	"homepage": "http://github.com/turanct/gunpowder",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Toon Daelman",
+			"email": "spinnewebber_toon@hotmail.com",
+			"homepage": "http://turanct.wordpress.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"guzzlehttp/guzzle": "4.*"
+	},
+	"require-dev": {
+		"phpspec/phpspec": "2.0.*@dev"
+	},
+	"config": {
+		"bin-dir": "bin"
+	},
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-0": {
+			"Gunpowder": "src"
+		}
+	}
+}
