@@ -8,13 +8,15 @@ use Prophecy\Argument;
 class SmokeTestSpec extends ObjectBehavior
 {
     function let(
-        \GuzzleHttp\Message\Response $response,
-        \GuzzleHttp\Client $client,
+        \Guzzle\Http\Message\Request $request,
+        \Guzzle\Http\Message\Response $response,
+        \Guzzle\Http\Client $client,
         \Gunpowder\Output\Output $output
     ) {
         $response->getStatusCode()->willReturn('200');
         $response->getBody()->willReturn('This is a test response');
-        $client->get('test')->willReturn($response);
+		$request->send()->willReturn($response);
+        $client->get('test')->willReturn($request);
         $this->beConstructedWith($client, $output);
     }
 

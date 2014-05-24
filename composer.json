@@ -13,7 +13,7 @@
 		}
 	],
 	"require": {
-		"guzzlehttp/guzzle": "4.*"
+		"guzzle/guzzle": "3.8.*@dev"
 	},
 	"require-dev": {
 		"phpspec/phpspec": "2.0.*@dev"

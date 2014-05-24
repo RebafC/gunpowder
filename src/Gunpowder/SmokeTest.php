@@ -2,18 +2,18 @@
 
 namespace Gunpowder;
 
-use GuzzleHttp\Client;
+use Guzzle\Http\Client;
 use Gunpowder\Output\Output;
 
 class SmokeTest
 {
     /**
-     * @var GuzzleHttp\Client $client The guzzle client
+     * @var Guzzle\Http\Client $client The guzzle client
      */
     private $client;
 
     /**
-     * @var GuzzleHttp\Message\Response $response The current Guzzle Response
+     * @var Guzzle\Http\Message\Response $response The current Guzzle Response
      */
     private $response;
 
@@ -30,7 +30,7 @@ class SmokeTest
     /**
      * Constructor
      *
-     * @param GuzzleHttp\Client       $client The guzzle client
+     * @param Guzzle\Http\Client       $client The guzzle client
      * @param Gunpowder\Output\Output $output The output handler
      */
     final public function __construct(Client $client, Output $output)
@@ -44,13 +44,13 @@ class SmokeTest
      *
      * @param string $url The url we need to visit
      *
-     * @return GuzzleHttp\Message\Response The response
+     * @return Guzzle\Http\Message\Response The response
      */
     public function visit($url, $responseCode = false)
     {
         $this->output->message('> ' . $url);
 
-        $this->response = $this->client->get($url);
+        $this->response = $this->client->get($url)->send();
 
         if ($responseCode !== false) {
             $this->assertResponseCode(200);

@@ -23,7 +23,7 @@ if (!class_exists($testClass)) {
 }
 
 // Create new Guzzle client
-$guzzle = new GuzzleHttp\Client();
+$guzzle = new Guzzle\Http\Client();
 
 // Create new Output client
 $output = new Gunpowder\Output\TermColor();
