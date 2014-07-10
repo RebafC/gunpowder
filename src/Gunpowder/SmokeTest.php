@@ -110,6 +110,40 @@ class SmokeTest
     }
 
     /**
+     * Assert that the json body contains a certain key. Only checks the top level.
+     *
+     * @param string $key The key that we want to look for in the json response.
+     *
+     * @return bool Did the assertion succeed?
+     */
+    public function assertJsonResponseContainsKey($key)
+    {
+        $message = 'Response contains "' . $key . '"';
+        try {
+            $json = $this->response->json();
+        } catch (\Exception $e) {
+            $json = null;
+        }
+
+        if ($json !== null && isset($json[$key])) {
+            if (empty($json[$key])) {
+                $message .= ' but is empty';
+            }
+
+            $this->output->success($message);
+
+            return true;
+        } else {
+            // Fail the test
+            $this->testStatus = false;
+
+            $this->output->failure($key . ' [not found]');
+
+            return false;
+        }
+    }
+
+    /**
      * Run the tests
      */
     public function run()

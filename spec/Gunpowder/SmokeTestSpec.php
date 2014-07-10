@@ -14,6 +14,7 @@ class SmokeTestSpec extends ObjectBehavior
     ) {
         $response->getStatusCode()->willReturn('200');
         $response->getBody()->willReturn('This is a test response');
+        $response->json()->willReturn(array('foo' => 'bar'));
         $client->get('test')->willReturn($response);
         $this->beConstructedWith($client, $output);
     }
@@ -28,6 +29,7 @@ class SmokeTestSpec extends ObjectBehavior
         $this->visit('test')->getStatusCode()->shouldReturn('200');
         $this->assertResponseCode(200)->shouldReturn(true);
         $this->assertBodyContains('test')->shouldReturn(true);
+        $this->assertJsonResponseContainsKey('foo')->shouldReturn(true);
         $this->getExitStatus()->shouldReturn(0);
     }
 
@@ -36,6 +38,7 @@ class SmokeTestSpec extends ObjectBehavior
         $this->visit('test')->getStatusCode()->shouldReturn('200');
         $this->assertResponseCode(404)->shouldReturn(false);
         $this->assertBodyContains('bla')->shouldReturn(false);
+        $this->assertJsonResponseContainsKey('bar')->shouldReturn(false);
         $this->getExitStatus()->shouldReturn(1);
     }
 }
